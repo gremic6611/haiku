@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
 });
 
 $( "#target" ).click(function() {
-	  $.ajax( "http://localhost:8080/haiku/get" ).done(function(data) {
+	  $.ajax( "/haiku/get" ).done(function(data) {
 		  console.log( "called /haiku/get" );
 		  $("#haiku").html(data);
 		})
