@@ -190,8 +190,8 @@ public class HaikuServiceImpl implements HaikuService {
 		Pattern wordPattern = Pattern.compile("(\\d+\\s(\\w)\\s)");
 			
 		try {
-			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("C:\\work\\wordDb2.txt"),"UTF-8");
-			BufferedWriter writer = new BufferedWriter(out);
+			//OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("C:\\work\\wordDb2.txt"),"UTF-8");
+			//BufferedWriter writer = new BufferedWriter(out);
 			
 			Resource resource = loader.getResource("classpath:static/wordb/wordDb.txt");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
@@ -223,13 +223,13 @@ public class HaikuServiceImpl implements HaikuService {
 						wordSet.get(category).add(word);
 					}
 					
-					writer.append(modifiedLine);
-					writer.append("\n");
+					//writer.append(modifiedLine);
+					//writer.append("\n");
 				}
 				line = reader.readLine();
 			}
 			
-			writer.close();
+			//writer.close();
 		} catch (IOException e) {
 			log.error("Problem reading word database:", e.getMessage());
 		}
