@@ -1,11 +1,8 @@
 package smg.emgem.haiku.service;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +15,6 @@ import java.util.regex.Pattern;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -190,9 +186,6 @@ public class HaikuServiceImpl implements HaikuService {
 		Pattern wordPattern = Pattern.compile("(\\d+\\s(\\w)\\s)");
 			
 		try {
-			//OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("C:\\work\\wordDb2.txt"),"UTF-8");
-			//BufferedWriter writer = new BufferedWriter(out);
-			
 			Resource resource = loader.getResource("classpath:static/wordb/wordDb.txt");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
 			String line = reader.readLine();
@@ -200,7 +193,6 @@ public class HaikuServiceImpl implements HaikuService {
 
 				int labelIndex = Math.min(line.indexOf(";"), line.indexOf("␞"));
 				if (labelIndex != -1) {
-					String modifiedLine = line;
 					Matcher matcher = wordPattern.matcher(line);
 					if (matcher.find()) {
 						String start = line.substring(0, labelIndex);
@@ -208,8 +200,6 @@ public class HaikuServiceImpl implements HaikuService {
 						String category = prefix.contains("a") ? "a" : prefix.contains("n") ? "n" : prefix.contains("v") ? "v": "r";
 						Word word;
 						if ("n".equals(category)) {//getting gender
-							//modifiedLine=findGenderExternally(word.getValue())+prefix.substring(prefix.length()-3) + line.substring(prefix.length());
-							//modifiedLine=0+prefix.substring(prefix.length()-3) + line.substring(prefix.length());
 							int rod=0;
 							try {
 								rod = Integer.valueOf(prefix.substring(0, prefix.length()-3));
@@ -223,17 +213,13 @@ public class HaikuServiceImpl implements HaikuService {
 						wordSet.get(category).add(word);
 					}
 					
-					//writer.append(modifiedLine);
-					//writer.append("\n");
 				}
 				line = reader.readLine();
 			}
 			
-			//writer.close();
 		} catch (IOException e) {
 			log.error("Problem reading word database:", e.getMessage());
 		}
-		
 	}
 	
 	private void initAdjectiveMap() {
